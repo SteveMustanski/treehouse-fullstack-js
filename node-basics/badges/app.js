@@ -3,6 +3,9 @@
 
 // require node module https
 const https = require('https');
+// require https for status codes
+const http = require('http');
+
 
 // function to print error messages
 function printError(error) {
@@ -18,24 +21,30 @@ function getProfile(username) {
     }
     // connect to the API URL https://teamtreehouse.com/username.json
     const request = https.get(`https://teamtreehouse.com/${username}.json`, response => {
-      let body = '';
+      if (response.statusCode === 200) {
+        let body = '';
 
-      // read the data
-      response.on('data', data => {
-        body += data.toString();
-      });
+        // read the data
+        response.on('data', data => {
+          body += data.toString();
+        });
 
-      response.on('end', () => {
-        try {
-          // Parse the data
-          const profile = JSON.parse(body);
-          // Printout the data
-          printMessage(username, profile.badges.length, profile.points.JavaScript);
+        response.on('end', () => {
+          try {
+            // Parse the data
+            const profile = JSON.parse(body);
+            // Printout the data
+            printMessage(username, profile.badges.length, profile.points.JavaScript);
 
-        } catch (error) {
-          printError(error);
-        }
-      });
+          } catch (error) {
+            printError(error);
+          }
+        });
+      } else {
+        const message = `There was an error getting profile data for ${username}. (${http.STATUS_CODES[response.statusCode]})`;
+        const statusCodeError = new Error(message);
+        printError(statusCodeError);
+      }
 
     });
 
