@@ -5,6 +5,7 @@
 const https = require('https');
 
 function getProfile(username) {
+  try {
   // function to print message to console
   function printMessage(username, badgeCount, points) {
     const message = `${username} has ${badgeCount} total badge(s) and ${points} JavaScript points`;
@@ -32,6 +33,9 @@ function getProfile(username) {
   request.on('error', error => {
     console.error(`Problem with request: ${error.message}`);
   });
+} catch (error) {
+  console.error(`There was an error: ${error.message}`);
+}
 }
 // gets the arguments from the command line as 3 element in the process.argv array
 // command would be node app.js followed by list of users
