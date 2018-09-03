@@ -3,27 +3,35 @@
 
 // require node module https
 const https = require('https');
-const username = 'smustanski';
 
-// function to print message to console
-function printMessage(username, badgeCount, points) {
-  const message = `${username} has ${badgeCount} total badge(s) and ${points} JavaScript points`;
-  console.log(message);
+function getProfile(username) {
+  // function to print message to console
+  function printMessage(username, badgeCount, points) {
+    const message = `${username} has ${badgeCount} total badge(s) and ${points} JavaScript points`;
+    console.log(message);
+  }
+  // connect to the API URL https://teamtreehouse.com/username.json
+  const request = https.get(`https://teamtreehouse.com/${username}.json`, response => {
+    let body = '';
+
+    // read the data
+    response.on('data', data => {
+      body += data.toString();
+    });
+
+    response.on('end', () => {
+      // Parse the data
+      const profile = JSON.parse(body);
+      // Printout the data
+      printMessage(username, profile.badges.length, profile.points.JavaScript);
+    });
+
+  });
 }
-// connect to the API URL https://teamtreehouse.com/username.json
-const request = https.get(`https://teamtreehouse.com/${username}.json`, response => {
-  let body = '';
+// gets the arguments from the command line as 3 element in the process.argv array
+// command would be node app.js followed by list of users
+const users = process.argv.slice(2);
 
-  // read the data
-  response.on('data', data => {
-    body += data.toString();
-  });
-
-  response.on('end', () => {
-    // Parse the data
-    const profile = JSON.parse(body);
-    // Printout the data
-    printMessage(username, profile.badges.length, profile.points.JavaScript);
-  });
-
+users.forEach(username => {
+  getProfile(username)
 });
