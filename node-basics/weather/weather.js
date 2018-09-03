@@ -17,7 +17,9 @@ function get(query){
     // log out the response 
     response.on('end', () =>{
       const forecast = JSON.parse(body);
-      console.log(forecast);
+      const location = (forecast.current_observation.display_location.full);
+      const temp_f = (forecast.current_observation.temp_f);
+      console.log(`The current temperature for ${location} is ${temp_f} degrees.`);
     });
 
   
