@@ -4,6 +4,11 @@
 // require node module https
 const https = require('https');
 
+// function to print error messages
+function printError(error) {
+  console.error(error.message);
+}
+
 function getProfile(username) {
   try {
     // function to print message to console
@@ -28,18 +33,16 @@ function getProfile(username) {
           printMessage(username, profile.badges.length, profile.points.JavaScript);
 
         } catch (error) {
-          console.error(error.message);
+          printError(error);
         }
       });
 
     });
 
     // handle any errors
-    request.on('error', error => {
-      console.error(`Problem with request: ${error.message}`);
-    });
+    request.on('error', printError);
   } catch (error) {
-    console.error(`There was an error: ${error.message}`);
+    printError(error);
   }
 }
 // gets the arguments from the command line as 3 element in the process.argv array
