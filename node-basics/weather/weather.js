@@ -21,12 +21,18 @@ function get(query) {
         });
 
         // log out the response 
+
         response.on('end', () => {
-          const forecast = JSON.parse(body);
-          const location = (forecast.current_observation.display_location.full);
-          const temp_f = (forecast.current_observation.temp_f);
-          console.log(`The current temperature for ${location} is ${temp_f} degrees.`);
+          try {
+            const forecast = JSON.parse(body);
+            const location = (forecast.current_observation.display_location.full);
+            const temp_f = (forecast.current_observation.temp_f);
+            console.log(`The current temperature for ${location} is ${temp_f} degrees.`);
+          } catch (error) {
+            printError(error);
+          }
         });
+
 
       } else {
         const message = `There was an error getting weather data for ${query}. (${http.STATUS_CODES[response.statusCode]})`;
