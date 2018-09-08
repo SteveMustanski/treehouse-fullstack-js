@@ -2,6 +2,21 @@
 // Solution: use node.js to look up profile information and serve template files via HTTP
 
 // 1. Create a web server
+const http = require('http');
+
+const hostname = '127.0.0.1';
+const port = 3000;
+
+const server = http.createServer((reqeust, response) => {
+  response.statusCode = 200;
+  response.setHeader('Content-Type', 'text/plain');
+  response.write('This is before the end\n');
+  response.end('Hello World\n');
+});
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
 
 // 2. Handle HTTP route GET / and POST /
 //  if the url == / && GET - show search
