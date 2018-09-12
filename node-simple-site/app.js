@@ -17,6 +17,3 @@ server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-//  Function that handles reading of template files and merge with information
-//  read from file and get string
-//  merge values into string
