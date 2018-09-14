@@ -5,7 +5,7 @@ const renderer = require('./renderer');
 // Handle HTTP route GET / and POST /
 function home(request, response) {
   if (request.url === '/') {
-    response.setHeader('Content-Type', 'text/plain');
+    response.setHeader('Content-Type', 'text/html');
     renderer.view('header', {}, response);
     renderer.view('Search', {}, response);
     renderer.view('Footer', {}, response);
@@ -19,7 +19,7 @@ function home(request, response) {
 function user(request, response) {
   let username = request.url.replace('/', '');
   if (username.length > 0) {
-    response.setHeader('Content-Type', 'text/plain');
+    response.setHeader('Content-Type', 'text/html');
     renderer.view('header', {}, response);
     // get JSON from treehouse
     let studentProfile = new Profile(username);
