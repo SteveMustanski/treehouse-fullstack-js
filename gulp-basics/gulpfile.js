@@ -2,6 +2,8 @@
 
 const gulp = require('gulp');
 const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
 
 gulp.task('concatScripts', (done) => {
   // lists files in terh order they will appear
@@ -15,5 +17,17 @@ gulp.task('concatScripts', (done) => {
     .pipe(gulp.dest('js'));
   done();
 });
+
+gulp.task('minifyScripts', (done) => {
+  // gets the app.js file
+  gulp.src('js/app.js')
+  // minifys it
+  .pipe(uglify())
+  // renames the file
+  .pipe(rename('app.min.js'))
+  //puts it in js folder
+  .pipe(gulp.dest('js'));
+  done();
+})
 
 gulp.task('default', gulp.series('concatScripts'));
