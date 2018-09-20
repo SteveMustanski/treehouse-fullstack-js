@@ -30,4 +30,4 @@ gulp.task('minifyScripts', (done) => {
   done();
 })
 
-gulp.task('default', gulp.series('concatScripts'));
+gulp.task('default', gulp.series('concatScripts', 'minifyScripts'));
