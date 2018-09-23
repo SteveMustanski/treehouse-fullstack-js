@@ -47,6 +47,9 @@ gulp.task('watchSass', () => {
   gulp.watch(['scss/**/*.scss'], gulp.series('compileSass'));
 });
 
-gulp.task('build', gulp.series('concatScripts', 'minifyScripts', 'compileSass'));
+gulp.task('build', gulp.series('concatScripts', 'minifyScripts', 'compileSass'), () => {
+  return gulp.src(["css/application.css", "js/app.min.js", 'index.html', 'img/**', 'fonts/**'], {base: './'})
+  pipe(gulp.dest('dist'));
+});
 
 gulp.task('default', gulp.series('build'));
