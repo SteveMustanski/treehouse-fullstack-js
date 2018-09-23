@@ -43,4 +43,6 @@ gulp.task('compileSass', (done) => {
   done();
 })
 
+gulp.task('build', gulp.series('concatScripts', 'minifyScripts', 'compileSass'));
+
 gulp.task('default', gulp.series('concatScripts', 'minifyScripts'));
