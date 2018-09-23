@@ -41,7 +41,11 @@ gulp.task('compileSass', (done) => {
   .pipe(maps.write('./'))
   .pipe(gulp.dest('css'));
   done();
-})
+});
+
+gulp.task('watchSass', () => {
+  gulp.watch(['scss/**/*.scss'], gulp.series('compileSass'));
+});
 
 gulp.task('build', gulp.series('concatScripts', 'minifyScripts', 'compileSass'));
 
