@@ -13,8 +13,10 @@ gulp.task('concatScripts', (done) => {
     'js/jquery.js',
     'js/sticky/jquery.sticky.js',
     'js/main.js'])
+    .pipe(maps.init())
     //pipes the above to the gulp-concat which ouputs app.js
     .pipe(concat('app.js'))
+    .pipe(maps.write('./'))
     // pipes the app.js file to the dest which specifies the dest folder
     .pipe(gulp.dest('js'));
   done();
