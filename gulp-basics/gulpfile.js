@@ -5,6 +5,7 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
+const maps = require('gulp-sourcemaps');
 
 gulp.task('concatScripts', (done) => {
   // lists files in terh order they will appear
@@ -33,7 +34,9 @@ gulp.task('minifyScripts', (done) => {
 
 gulp.task('compileSass', (done) => {
   gulp.src('scss/application.scss')
+  .pipe(maps.init())
   .pipe(sass())
+  .pipe(maps.write('./'))
   .pipe(gulp.dest('css'));
   done();
 })
