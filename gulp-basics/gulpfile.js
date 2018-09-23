@@ -45,4 +45,4 @@ gulp.task('compileSass', (done) => {
 
 gulp.task('build', gulp.series('concatScripts', 'minifyScripts', 'compileSass'));
 
-gulp.task('default', gulp.series('concatScripts', 'minifyScripts'));
+gulp.task('default', gulp.series('build'));
