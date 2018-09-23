@@ -6,6 +6,7 @@ const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const maps = require('gulp-sourcemaps');
+const del = require('del');
 
 gulp.task('concatScripts', (done) => {
   // lists files in terh order they will appear
@@ -47,9 +48,14 @@ gulp.task('watchSass', () => {
   gulp.watch(['scss/**/*.scss'], gulp.series('compileSass'));
 });
 
+gulp.task('clean', (done) => {
+  del(['dist', 'css/application.css*', 'js/app.*.js*']);
+  done();
+})
+
 gulp.task('build', gulp.series('concatScripts', 'minifyScripts', 'compileSass'), () => {
-  return gulp.src(["css/application.css", "js/app.min.js", 'index.html', 'img/**', 'fonts/**'], {base: './'})
-  pipe(gulp.dest('dist'));
+  gulp.src(["css/application.css", "js/app.min.js", 'index.html', 'img/**', 'fonts/**'], {base: './'})
+  .pipe(gulp.dest('dist'));
 });
 
-gulp.task('default', gulp.series('build'));
+gulp.task('default', gulp.series('clean','build'));
